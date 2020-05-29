@@ -1,6 +1,7 @@
 package com.embydextrous.activitylifecycle
 
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -79,5 +80,10 @@ class MainActivity : AppCompatActivity() {
     override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
         super.onTopResumedActivityChanged(isTopResumedActivity)
         Log.d(TAG, "Top resumed $isTopResumedActivity")
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        newConfig.toString()
     }
 }
