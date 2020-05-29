@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button2).setOnClickListener {
             startActivity(Intent(this, SecondActivity::class.java))
         }
+
+        findViewById<Button>(R.id.button3).setOnClickListener {
+            startActivity(Intent(this, ThirdActivity::class.java))
+        }
     }
 
     /* called when OS decides to kill the activity orientation change */
