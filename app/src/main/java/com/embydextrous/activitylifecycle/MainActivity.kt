@@ -84,6 +84,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        newConfig.toString()
+        Log.d(TAG, newConfig.toString())
+    }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration?) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
+        Log.d("TAG", "Multiwindow: $isInMultiWindowMode")
     }
 }
