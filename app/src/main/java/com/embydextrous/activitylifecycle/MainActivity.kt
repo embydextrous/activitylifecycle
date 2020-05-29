@@ -74,4 +74,10 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d(TAG, "onDestroy")
     }
+
+    /* Usable over Android Q for initializations like camera */
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+        Log.d(TAG, "Top resumed $isTopResumedActivity")
+    }
 }
