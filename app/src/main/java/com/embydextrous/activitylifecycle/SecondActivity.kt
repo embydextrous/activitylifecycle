@@ -1,34 +1,20 @@
 package com.embydextrous.activitylifecycle
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 
-class MainActivity : AppCompatActivity() {
+class SecondActivity : AppCompatActivity() {
 
     companion object {
-        private val TAG = MainActivity::class.java.simpleName
+        private val TAG = SecondActivity::class.java.simpleName
     }
 
     /* Called once to setup UI */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_second)
         Log.d(TAG, "onCreate")
-
-        findViewById<Button>(R.id.button1).setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Sample Alert")
-                .setNeutralButton("Dismiss") { dialog, _ -> dialog.dismiss() }
-                .show()
-        }
-
-        findViewById<Button>(R.id.button2).setOnClickListener {
-            startActivity(Intent(this, SecondActivity::class.java))
-        }
     }
 
     /* called when OS decides to kill the activity orientation change */
@@ -65,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.d(TAG, "onSaveInstanceState")
+
     }
 
     /* called when an activity is destroyed */
