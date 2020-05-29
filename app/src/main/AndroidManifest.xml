@@ -11,10 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".FourthActivity"></activity>
         <activity
             android:name=".ThirdActivity"
-            android:resizeableActivity="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:resizeableActivity="true"
             android:supportsPictureInPicture="true" />
         <activity android:name=".SecondActivity" />
         <activity android:name=".MainActivity">
@@ -25,4 +26,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

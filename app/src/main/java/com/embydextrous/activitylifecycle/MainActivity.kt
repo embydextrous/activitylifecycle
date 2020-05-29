@@ -34,6 +34,18 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button3).setOnClickListener {
             startActivity(Intent(this, ThirdActivity::class.java))
         }
+
+        findViewById<Button>(R.id.button4).setOnClickListener {
+            startActivity(
+                Intent(this, FourthActivity::class.java).apply { putExtra("optimize", false) }
+            )
+        }
+
+        findViewById<Button>(R.id.button5).setOnClickListener {
+            startActivity(
+                Intent(this, FourthActivity::class.java).apply { putExtra("optimize", true) }
+            )
+        }
     }
 
     /* called when OS decides to kill the activity orientation change */
