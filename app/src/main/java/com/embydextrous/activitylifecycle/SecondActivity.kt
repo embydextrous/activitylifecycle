@@ -1,6 +1,7 @@
 package com.embydextrous.activitylifecycle
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,7 +27,8 @@ class SecondActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate")
 
         findViewById<Button>(R.id.button1).setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            setResult(Activity.RESULT_OK)
         }
 
         findViewById<Button>(R.id.button2).setOnClickListener {

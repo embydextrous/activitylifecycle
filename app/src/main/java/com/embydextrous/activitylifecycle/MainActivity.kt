@@ -27,6 +27,8 @@ import androidx.appcompat.app.AlertDialog
  * Rotate
  * A.onPause() -> A.onStop() -> A.onSaveInstanceState() -> A.onDestroy() -> A.onCreate() -> A.onStart() -> A.onRestoreInstanceState() -> A.onResume()
  *
+ * In case of [startActivityForResult] when user presses back [onActivityResult] is called before [onStart]
+ *
  * Other important methods (Over Android Q where multiple activities can be in resumed state)
  * [onTopResumedActivityChanged]
  * [onWindowFocusChanged] -> Prior to Q trust [onResume], above it [onTopResumedActivityChanged]
@@ -73,6 +75,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(
                 Intent(this, FourthActivity::class.java).apply { putExtra("optimize", true) }
             )
+        }
+
+        findViewById<Button>(R.id.button6).setOnClickListener {
+            startActivityForResult(Intent(this, SecondActivity::class.java), 1000)
         }
     }
 
@@ -133,6 +139,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration?) {
         super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
-        Log.d("TAG", "Multiwindow: $isInMultiWindowMode")
+        Log.d(TAG, "Multiwindow: $isInMultiWindowMode")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d(TAG, "onActivityResult")
     }
 }
