@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
     commitNow() -> sync but does not support addToBackStack()
     commitAllowingStateLoss() -> To commit fragment transaction after onSaveInstanceState() is called on Activity
 
-    empty constructor? Why? Config changes. See [SecondFragment]
+    empty constructor? Why? Config changes. See [SecondFragment]. To check replace fragment B and rotate. The activity will end.
     Lifecycle
     onAttach() -> onCreate() -> onCreateView() -> onActivityCreated() -> onStart() -> onResume() -> onPause() -> onStop() -> onDestroyView() -> onDestroy() -> onDetach()
 
