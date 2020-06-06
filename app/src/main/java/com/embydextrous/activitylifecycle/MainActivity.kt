@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 
 /**
  * Lifecycle (Above Android P, Prior to P onSaveInstanceState is called before onStart)
