@@ -14,6 +14,42 @@ import androidx.fragment.app.Fragment
     commit() -> async
     commitNow() -> sync but does not support addToBackStack()
     commitAllowingStateLoss() -> To commit fragment transaction after onSaveInstanceState() is called on Activity
+
+    empty constructor? Why? Config changes. See [SecondFragment]
+    Lifecycle
+    onAttach() -> onCreate() -> onCreateView() -> onActivityCreated() -> onStart() -> onResume() -> onPause() -> onStop() -> onDestroyView() -> onDestroy() -> onDetach()
+
+    Fragment A -> Add Fragment B
+    B.onAttach() -> B.onCreate() -> B.onCreateView() -> B.onActivityCreated() -> B.onStart() -> B.onResume()
+    BackPress
+    B.onPause() -> B.onStop() -> B.onDestroyView() -> B.onDestroy() -> B.onDetach()
+
+    Fragment A -> Replace Fragment B (normal)
+    B.onAttach() -> B.onCreate() -> A.onPause() -> A.onStop() -> A.onDestroyView() -> B.onCreateView() -> B.onActivityCreated() -> B.onStart() -> B.onResume()
+    BackPress
+    B.onPause() -> B.onStop() -> B.onDestroyView() -> B.onDestroy() -> B.onDetach() -> A.onCreateView() -> A.onActivityCreated() -> A.onStart() -> A.onResume()
+
+    Fragment A -> Replace Fragment B (optimized)
+    B.onAttach() -> B.onCreate() -> B.onCreateView() -> B.onActivityCreated() -> B.onStart() -> B.onResume() -> A.onPause() -> A.onStop() -> A.onDestroyView()
+    BackPress
+    A.onCreateView() -> A.onActivityCreated() -> A.onStart() -> A.onResume() -> B.onPause() -> B.onStop() -> B.onDestroyView() -> B.onDestroy() -> B.onDetach()
+
+    Activity A hosting Fragment F in its onCreate()
+        Activity -> onCreate()
+        Fragment -> onAttach()
+        Fragment -> onCreate()
+        Fragment -> onCreateView()
+        Fragment -> onActivityCreated()
+        Fragment -> onStart(), Activity -> onStart()
+        Activity -> onResume(), Fragment -> onResume()
+
+    Back Press
+        Fragment -> onPause(), Activity -> onPause()
+        Fragment -> onStop(), Activity -> onStop()
+        Fragment -> onDestroyView()
+        Fragment -> onDestroy()
+        Fragment -> onDetach()
+        Activity -> OnDestroy()
  */
 class FirstFragment : Fragment() {
 
@@ -23,7 +59,7 @@ class FirstFragment : Fragment() {
         fun newInstance(): Fragment = FirstFragment()
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach")
     }

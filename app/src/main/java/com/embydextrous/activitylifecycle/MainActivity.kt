@@ -1,13 +1,39 @@
 package com.embydextrous.activitylifecycle
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 
+/**
+ * Lifecycle (Above Android P, Prior to P onSaveInstanceState is called before onStart)
+ *
+ * Start Activity A
+ * A.onCreate() -> A.onStart() -> A.onResume()
+ * Start Activity B
+ * A.onPause() -> B.onCreate() -> B.onStart() -> B.onResume() -> A.onStop() -> A.onSaveInstanceState()
+ * BackPress
+ * B.onPause() -> A.onStart() -> A.onRestoreInstanceState() {called only if A was destroyed} -> A.onResume() -> B.onStop() -> B.onDestroy()
+ * BackPress
+ * A.onPause() -> A.onStop() -> A.onDestroy()
+ *
+ * Start Activity A
+ * A.onCreate() -> A.onStart() -> A.onResume()
+ * Rotate
+ * A.onPause() -> A.onStop() -> A.onSaveInstanceState() -> A.onDestroy() -> A.onCreate() -> A.onStart() -> A.onRestoreInstanceState() -> A.onResume()
+ *
+ * Other important methods (Over Android Q where multiple activities can be in resumed state)
+ * [onTopResumedActivityChanged]
+ * [onWindowFocusChanged] -> Prior to Q trust [onResume], above it [onTopResumedActivityChanged]
+ * [onConfigurationChanged] does not recreate on config changes marked in manifest
+ * [onMultiWindowModeChanged]
+ * [onUserLeaveHint] -> called when home is tapped, not called when someone calls you -> called before onPause
+ */
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -21,10 +47,12 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate")
 
         findViewById<Button>(R.id.button1).setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Sample Alert")
-                .setNeutralButton("Dismiss") { dialog, _ -> dialog.dismiss() }
-                .show()
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.fragment_second)
+            dialog.setCanceledOnTouchOutside(true)
+            dialog.show()
         }
 
         findViewById<Button>(R.id.button2).setOnClickListener {

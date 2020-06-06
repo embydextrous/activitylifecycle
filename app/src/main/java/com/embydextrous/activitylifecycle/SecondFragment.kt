@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
+// crashes on config changes
 class SecondFragment(val a: Int) : Fragment() {
 
     private val TAG = SecondFragment::class.java.simpleName
@@ -16,7 +17,7 @@ class SecondFragment(val a: Int) : Fragment() {
         fun newInstance(): Fragment = SecondFragment(1)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach")
     }

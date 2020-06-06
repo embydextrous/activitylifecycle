@@ -1,8 +1,12 @@
 package com.embydextrous.activitylifecycle
 
+import android.Manifest
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
 
 class SecondActivity : AppCompatActivity() {
 
@@ -10,11 +14,32 @@ class SecondActivity : AppCompatActivity() {
         private val TAG = SecondActivity::class.java.simpleName
     }
 
+    val permissionSeek =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            Log.d("Location Permission", granted.toString())
+        }
+
     /* Called once to setup UI */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
         Log.d(TAG, "onCreate")
+
+        findViewById<Button>(R.id.button1).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        findViewById<Button>(R.id.button2).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            val title = "Send Something"
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(Intent.createChooser(intent, title))
+            }
+        }
+
+        findViewById<Button>(R.id.button3).setOnClickListener {
+            permissionSeek.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
     }
 
     /* called when OS decides to kill the activity orientation change */
